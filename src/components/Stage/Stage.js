@@ -190,27 +190,26 @@ const Stage = ({
     }
   }, [handleWheel, disableZoom]);
 
-  const menuOptions = React.useMemo(
-    () => {
-      const options = orderBy(
-        Object.values(nodeTypes)
-          .filter(node => node.addable !== false)
-          .map(node => ({
-            value: node.type,
-            label: node.label,
-            description: node.description,
-            sortIndex: node.sortIndex,
-            node
-          })),
-        ["sortIndex", "label"]
-      )
-      if (!disableComments) {
-        options.push({ value: "comment", label: "Comment", description: "A comment for documenting nodes", internalType: "comment" })
-      }
-      return options
-    },
-    [nodeTypes, disableComments]
-  );
+  function generate_menu_options() {
+    const options = orderBy(
+      Object.values(nodeTypes)
+        .filter(node => node.addable !== false)
+        .map(node => ({
+          value: node.type,
+          label: node.label,
+          description: node.description,
+          sortIndex: node.sortIndex,
+          node
+        })),
+      ["sortIndex", "label"]
+    )
+    if (!disableComments) {
+      options.push({ value: "comment", label: "Comment", description: "A comment for documenting nodes", internalType: "comment" })
+    }
+    return options
+  }
+
+  const menuOptions = generate_menu_options()
 
   return (
     <Draggable
