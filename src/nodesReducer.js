@@ -375,6 +375,10 @@ const nodesReducer = (
       };
     }
 
+    case "RE_INIT":{
+      return action.nodes
+    }
+
     default:
       return nodes;
   }

@@ -50,7 +50,8 @@ export let NodeEditor = (
     disablePan = false,
     circularBehavior,
     renderNodeHeader,
-    debug
+    debug,
+    setDispatchNodes,
   },
   ref
 ) => {
@@ -68,6 +69,11 @@ export let NodeEditor = (
     {},
     () => getInitialNodes(initialNodes, defaultNodes, nodeTypes, portTypes, context)
   );
+
+  if (setDispatchNodes) {
+    setDispatchNodes(dispatchNodes, getInitialNodes)
+  }
+
   const [comments, dispatchComments] = React.useReducer(
     commentsReducer,
     initialComments || {}
@@ -131,7 +137,7 @@ export let NodeEditor = (
   }, [comments, previousComments, onCommentsChange]);
 
   React.useEffect(() => {
-    if(sideEffectToasts){
+    if (sideEffectToasts) {
       dispatchToasts(sideEffectToasts)
       setSideEffectToasts(null)
     }
@@ -235,4 +241,4 @@ NodeEditor = React.forwardRef(NodeEditor);
 export { FlumeConfig, Controls, Colors } from "./typeBuilders";
 export { RootEngine } from "./RootEngine";
 export const useRootEngine = (nodes, engine, context, options = {}) =>
-  Object.keys(nodes).length ? engine.resolveRootNode(nodes, {...options, context }) : {};
+  Object.keys(nodes).length ? engine.resolveRootNode(nodes, { ...options, context }) : {};
