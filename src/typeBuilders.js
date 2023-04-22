@@ -211,8 +211,7 @@ export class FlumeConfig {
     if (!this.nodeTypes[type]) {
       console.error(`Non-existent node type "${type}" cannot be removed.`);
     } else {
-      const { [type]: deleted, ...nodeTypes } = this.nodeTypes;
-      this.nodeTypes = nodeTypes;
+      delete this.nodeTypes[type]
     }
     return this;
   }
