@@ -52,6 +52,7 @@ export let NodeEditor = (
     renderNodeHeader,
     debug,
     setDispatchNodes,
+    filterNodeTypes,
   },
   ref
 ) => {
@@ -199,6 +200,7 @@ export let NodeEditor = (
                             />
                           </React.Fragment>
                         }
+                        filterNodeTypes = {filterNodeTypes}
                       >
                         {!hideComments &&
                           Object.values(comments).map(comment => (

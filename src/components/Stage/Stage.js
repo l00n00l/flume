@@ -21,7 +21,8 @@ const Stage = ({
   dispatchComments,
   disableComments,
   disablePan,
-  disableZoom
+  disableZoom,
+  filterNodeTypes,
 }) => {
   const nodeTypes = React.useContext(NodeTypesContext);
   const dispatchNodes = React.useContext(NodeDispatchContext);
@@ -239,6 +240,7 @@ const Stage = ({
             onRequestClose={closeContextMenu}
             onOptionSelected={addNode}
             label="Add Node"
+            filterNodeTypes={filterNodeTypes}
           />
         </Portal>
       ) : null}

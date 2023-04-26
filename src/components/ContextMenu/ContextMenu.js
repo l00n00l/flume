@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ContextMenu.css";
 import clamp from "lodash/clamp";
-import { nanoid }from "nanoid/non-secure/index";
+import { nanoid } from "nanoid/non-secure/index";
 
 const ContextMenu = ({
   x,
@@ -12,7 +12,8 @@ const ContextMenu = ({
   label,
   hideHeader,
   hideFilter,
-  emptyText
+  emptyText,
+  filterNodeTypes
 }) => {
   const menuWrapper = React.useRef();
   const menuOptionsWrapper = React.useRef();
@@ -65,6 +66,9 @@ const ContextMenu = ({
 
   const filteredOptions = React.useMemo(() => {
     if (!filter) return options;
+    if (filterNodeTypes) {
+      return filterNodeTypes(filter, options)
+    }
     const lowerFilter = filter.toLowerCase();
     return options.filter(opt => opt.label.toLowerCase().includes(lowerFilter));
   }, [filter, options]);
