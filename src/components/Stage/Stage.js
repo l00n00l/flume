@@ -8,6 +8,16 @@ import orderBy from "lodash/orderBy";
 import clamp from "lodash/clamp";
 import { STAGE_ID } from '../../constants'
 
+export function generate_menu_option(node) {
+  return {
+    value: node.type,
+    label: node.label,
+    description: node.description,
+    sortIndex: node.sortIndex,
+    node
+  }
+}
+
 const Stage = ({
   scale,
   translate,
@@ -195,13 +205,7 @@ const Stage = ({
     const options = orderBy(
       Object.values(nodeTypes)
         .filter(node => node.addable !== false)
-        .map(node => ({
-          value: node.type,
-          label: node.label,
-          description: node.description,
-          sortIndex: node.sortIndex,
-          node
-        })),
+        .map(generate_menu_option),
       ["sortIndex", "label"]
     )
     if (!disableComments) {

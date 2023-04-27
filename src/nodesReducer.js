@@ -209,7 +209,7 @@ export const getInitialNodes = (
 const getDefaultData = ({ node, nodeType, portTypes, context }) => {
   const inputs = Array.isArray(nodeType.inputs)
     ? nodeType.inputs
-    : nodeType.inputs(node.inputData, node.connections, context);
+    : nodeType.inputs(node, context);
   return inputs.reduce((obj, input) => {
     const inputType = portTypes[input.type];
     obj[input.name || inputType.name] = (

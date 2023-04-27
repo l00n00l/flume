@@ -1,6 +1,6 @@
 import React from "react";
 import { useId } from "@reach/auto-id";
-import Stage from "./components/Stage/Stage";
+import Stage, { generate_menu_option } from "./components/Stage/Stage";
 import Node from "./components/Node/Node";
 import Comment from "./components/Comment/Comment";
 import Toaster from "./components/Toaster/Toaster";
@@ -29,6 +29,8 @@ import clamp from "lodash/clamp";
 import Cache from "./Cache";
 import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
+
+export let generateMenuOption = generate_menu_option;
 
 const defaultContext = {};
 
@@ -200,7 +202,7 @@ export let NodeEditor = (
                             />
                           </React.Fragment>
                         }
-                        filterNodeTypes = {filterNodeTypes}
+                        filterNodeTypes={filterNodeTypes}
                       >
                         {!hideComments &&
                           Object.values(comments).map(comment => (
