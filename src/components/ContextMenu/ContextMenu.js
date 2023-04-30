@@ -65,16 +65,21 @@ const ContextMenu = ({
   }, [testClickOutside, testEscape]);
 
   const [filteredOptions, setFilterOptions] = React.useState([])
+
+  function filterOptions(filter, options){
+    const lowerFilter = filter.toLowerCase();
+    return options.filter(options => options.label.toLowerCase().includes(lowerFilter));
+  }
+
   React.useEffect(() => {
     if (!filter) {
       setFilterOptions(options)
       return
     }
-    const lowerFilter = filter.toLowerCase();
-    let opts = options.filter(options => options.label.toLowerCase().includes(lowerFilter));
+    let opts = filterOptions(filter, options)
     setFilterOptions(opts)
     if (filterNodeTypes) {
-      filterNodeTypes(filter, opts, setFilterOptions)
+      filterNodeTypes(filter, opts, setFilterOptions, filterOptions)
     }
   }, [filter, options])
 
