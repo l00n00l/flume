@@ -64,14 +64,29 @@ const ContextMenu = ({
     };
   }, [testClickOutside, testEscape]);
 
-  const filteredOptions = React.useMemo(() => {
-    if (!filter) return options;
-    if (filterNodeTypes) {
-      return filterNodeTypes(filter, options)
+  const [filteredOptions, setFilterOptions] = React.useState([])
+  React.useEffect(() => {
+    if (!filter) {
+      setFilterOptions(options)
+      return
     }
     const lowerFilter = filter.toLowerCase();
-    return options.filter(opt => opt.label.toLowerCase().includes(lowerFilter));
-  }, [filter, options]);
+    let opts = options.filter(options => options.label.toLowerCase().includes(lowerFilter));
+    setFilterOptions(opts)
+    if (filterNodeTypes) {
+      filterNodeTypes(filter, opts, setFilterOptions)
+    }
+  }, [filter, options])
+
+  // const filteredOptions = React.useMemo(() => {
+  //   console.log("filteredOptions")
+  //   if (!filter) return options;
+  //   if (filterNodeTypes) {
+  //     return filterNodeTypes(filter, options)
+  //   }
+  //   const lowerFilter = filter.toLowerCase();
+  //   return options.filter(opt => opt.label.toLowerCase().includes(lowerFilter));
+  // }, [filter, options]);
 
   const handleFilterChange = e => {
     const value = e.target.value;
