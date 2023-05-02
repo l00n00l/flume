@@ -24,7 +24,8 @@ const Control = ({
   getOptions,
   setValue,
   defaultValue,
-  isMonoControl
+  isMonoControl,
+  process = null,
 }) => {
   const nodesDispatch = React.useContext(NodeDispatchContext);
   const executionContext = React.useContext(ContextContext);
@@ -48,7 +49,8 @@ const Control = ({
       triggerRecalculation,
       updateNodeConnections,
       onChange,
-      data
+      data,
+      process
     };
     switch (type) {
       case "select":

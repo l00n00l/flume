@@ -3,7 +3,7 @@ const define = (value, defaultValue) =>
 
 const buildControlType = (
   defaultConfig,
-  validate = () => {},
+  validate = () => { },
   setup = () => ({})
 ) => config => {
   validate(config);
@@ -30,7 +30,7 @@ export const Controls = {
       options: [],
       defaultValue: ""
     },
-    () => {},
+    () => { },
     config => ({
       options: define(config.options, []),
       getOptions: define(config.getOptions, undefined),
@@ -41,11 +41,13 @@ export const Controls = {
     {
       type: "number",
       name: "number",
-      defaultValue: 0
+      defaultValue: 0,
+      process: null,
     },
     () => {},
     config => ({
-      step: define(config.step, undefined)
+      step: define(config.step, undefined),
+      process: define(config.process, null),
     })
   ),
   checkbox: buildControlType({
@@ -60,7 +62,7 @@ export const Controls = {
       options: [],
       defaultValue: []
     },
-    () => {},
+    () => { },
     config => ({
       options: define(config.options, []),
       getOptions: define(config.getOptions, undefined),
@@ -71,12 +73,12 @@ export const Controls = {
     {
       type: "custom",
       name: "custom",
-      render: () => {},
+      render: () => { },
       defaultValue: undefined
     },
-    () => {},
+    () => { },
     config => ({
-      render: define(config.render, () => {})
+      render: define(config.render, () => { })
     })
   )
 };
@@ -278,7 +280,7 @@ export class FlumeConfig {
           console.warn(
             `We've detected that one or more of your nodes is using dynamic inputs/outputs. This is a potentially dangerous operation as we are unable to detect if this portType is being used in one of those nodes. You can quiet this message by passing { skipDynamicNodesCheck: true } in as the second argument.`
           );
-        }  
+        }
       }
       const affectedNodes = Object.values(this.nodeTypes).filter(
         node =>

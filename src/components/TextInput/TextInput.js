@@ -8,7 +8,8 @@ const TextInput = ({
   onChange,
   data,
   step,
-  type
+  type,
+  process = null,
 }) => {
   const numberInput = React.useRef()
   const recalculateStageRect = React.useContext(RecalculateStageRectContext)
@@ -42,7 +43,10 @@ const TextInput = ({
             }
           }}
           onChange={e => {
-            const inputValue = e.target.value.replace(/e/g, "");
+            let inputValue = e.target.value.replace(/e/g, "");
+            if(process){
+              inputValue = process(inputValue, data)
+            }
             if (!!inputValue) {
               const value = parseFloat(inputValue, 10);
               if (Number.isNaN(value)) {
