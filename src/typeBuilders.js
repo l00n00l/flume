@@ -91,7 +91,9 @@ export const Colors = {
   purple: "purple",
   blue: "blue",
   green: "green",
-  grey: "grey"
+  grey: "grey",
+  tuple: "tuple",
+  dict: "dict"
 };
 
 export const getPortBuilders = ports =>

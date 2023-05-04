@@ -108,4 +108,10 @@
   &[data-port-color="pink"]{
     background: linear-gradient(to bottom, #fe8aeb, #e046c3);
   }
+  &[data-port-color="tuple"]{
+    background: linear-gradient(to bottom, #bf00ff, #bf00ff);
+  }
+  &[data-port-color="dict"]{
+    background: linear-gradient(to bottom, #8fc409, #00e1ff);
+  }
 }
