@@ -55,6 +55,7 @@ export let NodeEditor = (
     debug,
     setDispatchNodes,
     filterNodeTypes,
+    runNode,
   },
   ref
 ) => {
@@ -222,6 +223,7 @@ export let NodeEditor = (
                             onDragStart={recalculateStageRect}
                             renderNodeHeader={renderNodeHeader}
                             key={node.id}
+                            runNode={runNode}
                           />
                         ))}
                         <Connections nodes={nodes} editorId={editorId} />

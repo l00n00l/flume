@@ -23,7 +23,8 @@ const Node = ({
   inputData,
   root,
   onDragStart,
-  renderNodeHeader
+  renderNodeHeader,
+  runNode = null
 }) => {
   const cache = React.useContext(CacheContext);
   const nodeTypes = React.useContext(NodeTypesContext);
@@ -72,32 +73,32 @@ const Node = ({
           x:
             byScale(
               toRect.x -
-                stageRect.current.x +
-                portHalf -
-                stageRect.current.width / 2
+              stageRect.current.x +
+              portHalf -
+              stageRect.current.width / 2
             ) + byScale(stageState.translate.x),
           y:
             byScale(
               toRect.y -
-                stageRect.current.y +
-                portHalf -
-                stageRect.current.height / 2
+              stageRect.current.y +
+              portHalf -
+              stageRect.current.height / 2
             ) + byScale(stageState.translate.y)
         };
         const to = {
           x:
             byScale(
               fromRect.x -
-                stageRect.current.x +
-                portHalf -
-                stageRect.current.width / 2
+              stageRect.current.x +
+              portHalf -
+              stageRect.current.width / 2
             ) + byScale(stageState.translate.x),
           y:
             byScale(
               fromRect.y -
-                stageRect.current.y +
-                portHalf -
-                stageRect.current.height / 2
+              stageRect.current.y +
+              portHalf -
+              stageRect.current.height / 2
             ) + byScale(stageState.translate.y)
         };
         cnx.setAttribute("d", calculateCurve(from, to));
@@ -153,6 +154,11 @@ const Node = ({
       case "deleteNode":
         deleteNode();
         break;
+      case "runNode":
+        if (runNode) {
+          runNode(id)
+        }
+        break;
       default:
         return;
     }
@@ -202,13 +208,18 @@ const Node = ({
             options={[
               ...(deletable !== false
                 ? [
-                    {
-                      label: "Delete Node",
-                      value: "deleteNode",
-                      description: "Deletes a node and all of its connections."
-                    }
-                  ]
-                : [])
+                  {
+                    label: "删除(Delete)",
+                    value: "deleteNode",
+                    description: "Deletes a node and all of its connections."
+                  }
+                ]
+                : []),
+              {
+                label: "运行(Run)",
+                value: "runNode",
+                description: "运行该节点"
+              }
             ]}
             onRequestClose={closeContextMenu}
             onOptionSelected={handleMenuOption}
