@@ -114,4 +114,7 @@
   &[data-port-color="dict"]{
     background: linear-gradient(to bottom, #8fc409, #00e1ff);
   }
+  &[data-port-color="control"]{
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
+  }
 }

@@ -93,7 +93,8 @@ export const Colors = {
   green: "green",
   grey: "grey",
   tuple: "tuple",
-  dict: "dict"
+  dict: "dict",
+  control: "control",
 };
 
 export const getPortBuilders = ports =>
