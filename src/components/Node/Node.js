@@ -188,7 +188,7 @@ const Node = ({
           openMenu: handleContextMenu,
           closeMenu: closeContextMenu,
           deleteNode
-        })
+        }, id)
       ) : (
         <NodeHeader>{label}</NodeHeader>
       )}
