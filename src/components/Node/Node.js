@@ -175,6 +175,7 @@ const Node = ({
       onDrag={handleDrag}
       onDragEnd={stopDrag}
       innerRef={nodeWrapper}
+      id = {id}
       data-node-id={id}
       data-flume-component="node"
       data-flume-node-type={currentNodeType.type}

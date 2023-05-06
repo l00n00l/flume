@@ -3,7 +3,7 @@ import {
   deleteConnectionsByNodeId
 } from "./connectionCalculator";
 import { checkForCircularNodes } from "./utilities";
-import {nanoid} from "nanoid/non-secure/index";
+import { nanoid } from "nanoid/non-secure/index";
 
 const addConnection = (nodes, input, output, portTypes) => {
   const newNodes = {
@@ -250,7 +250,7 @@ const nodesReducer = (
           });
           return nodes;
         } else {
-          if(isCircular && circularBehavior === "warn"){
+          if (isCircular && circularBehavior === "warn") {
             dispatchToasts({
               type: "ADD_TOAST",
               title: "Circular Connection Detected",
@@ -335,7 +335,7 @@ const nodesReducer = (
         if (newNodes[key].defaultNode) {
           const newNodeId = nanoid(10);
           const { id, defaultNode, ...node } = newNodes[key];
-          newNodes[newNodeId] = {...node, id: newNodeId };
+          newNodes[newNodeId] = { ...node, id: newNodeId };
           delete newNodes[key];
         }
       }
@@ -375,8 +375,19 @@ const nodesReducer = (
       };
     }
 
-    case "RE_INIT":{
+    case "RE_INIT": {
       return action.nodes
+    }
+
+    case "SET_NODE_WIDTH": {
+      const { nodeId, width } = action;
+      return {
+        ...nodes,
+        [nodeId]: {
+          ...nodes[nodeId],
+          width
+        }
+      };
     }
 
     default:
