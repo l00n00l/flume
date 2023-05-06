@@ -89,7 +89,8 @@ const Control = ({
           name,
           portName,
           inputLabel,
-          defaultValue
+          defaultValue,
+          nodeId
         }, allData);
       default:
         return <div>Control</div>;
