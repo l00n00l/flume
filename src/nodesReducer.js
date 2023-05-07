@@ -374,6 +374,18 @@ const nodesReducer = (
         }
       };
     }
+    // 用于清空所有的节点
+    case "CLEAR": {
+      let keys = []
+      let nodes = action.nodes
+      for (const key in nodes) {
+        keys.push(key)
+      }
+      for (const key of keys) {
+        nodes = removeNode(nodes, key)
+      }
+      return {}
+    }
 
     case "RE_INIT": {
       return action.nodes

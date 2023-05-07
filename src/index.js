@@ -56,11 +56,20 @@ export let NodeEditor = (
     setDispatchNodes,
     filterNodeTypes,
     runNode,
+    outOptions,
+    onOptionSelected,
   },
   ref
 ) => {
   const editorId = useId();
   const cache = React.useRef(new Cache());
+  // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
+  outOptions({
+    refreshCache: () => {
+      cache.current = new Cache()
+    }
+  })
+
   const stage = React.useRef();
   const [sideEffectToasts, setSideEffectToasts] = React.useState()
   const [toasts, dispatchToasts] = React.useReducer(toastsReducer, []);
@@ -204,6 +213,8 @@ export let NodeEditor = (
                           </React.Fragment>
                         }
                         filterNodeTypes={filterNodeTypes}
+                        outOptions={outOptions}
+                        onOptionSelected={onOptionSelected}
                       >
                         {!hideComments &&
                           Object.values(comments).map(comment => (

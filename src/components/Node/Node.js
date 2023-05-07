@@ -40,8 +40,9 @@ const Node = ({
   const byScale = value => (1 / stageState.scale) * value;
 
   const updateConnectionsByTransput = (transput = {}, isOutput) => {
-    Object.entries(transput).forEach(([portName, outputs]) => {
-      outputs.forEach(output => {
+    for (const portName in transput) {
+      let outputs = transput[portName]
+      for (const output of outputs) {
         const toRect = getPortRect(
           id,
           portName,
@@ -102,8 +103,9 @@ const Node = ({
             ) + byScale(stageState.translate.y)
         };
         cnx.setAttribute("d", calculateCurve(from, to));
-      });
-    });
+      }
+    }
+
   };
 
   const updateNodeConnections = () => {
@@ -175,7 +177,7 @@ const Node = ({
       onDrag={handleDrag}
       onDragEnd={stopDrag}
       innerRef={nodeWrapper}
-      id = {id}
+      id={id}
       data-node-id={id}
       data-flume-component="node"
       data-flume-node-type={currentNodeType.type}

@@ -33,6 +33,8 @@ const Stage = ({
   disablePan,
   disableZoom,
   filterNodeTypes,
+  outOptions,
+  onOptionSelected = null,
 }) => {
   const nodeTypes = React.useContext(NodeTypesContext);
   const dispatchNodes = React.useContext(NodeDispatchContext);
@@ -42,6 +44,9 @@ const Stage = ({
   const [menuCoordinates, setMenuCoordinates] = React.useState({ x: 0, y: 0 });
   const dragData = React.useRef({ x: 0, y: 0 });
   const [spaceIsPressed, setSpaceIsPressed] = React.useState(false);
+  
+  // 导出函数
+  outOptions({ setMenuOpen, setMenuCoordinates })
 
   const setStageRect = React.useCallback(() => {
     stageRef.current = wrapper.current.getBoundingClientRect();
@@ -168,6 +173,8 @@ const Stage = ({
       });
     }
   };
+  // 导出addNode
+  outOptions({addNode})
 
   const handleDocumentKeyUp = e => {
     if (e.which === 32) {
@@ -242,7 +249,7 @@ const Stage = ({
             y={menuCoordinates.y}
             options={menuOptions}
             onRequestClose={closeContextMenu}
-            onOptionSelected={addNode}
+            onOptionSelected={onOptionSelected || addNode}
             label="Add Node"
             filterNodeTypes={filterNodeTypes}
           />
