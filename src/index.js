@@ -63,14 +63,7 @@ export let NodeEditor = (
 ) => {
   const editorId = useId();
   const cache = React.useRef(new Cache());
-  // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
-  if (outOptions) {
-    outOptions({
-      refreshCache: () => {
-        cache.current = new Cache()
-      }
-    })
-  }
+
 
 
   const stage = React.useRef();
@@ -158,6 +151,15 @@ export let NodeEditor = (
       setSideEffectToasts(null)
     }
   }, [sideEffectToasts])
+
+  if (outOptions) {
+    outOptions({
+      // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
+      refreshCache: () => {
+        cache.current = new Cache()
+      },
+    })
+  }
 
   return (
     <PortTypesContext.Provider value={portTypes}>

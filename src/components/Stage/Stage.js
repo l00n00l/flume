@@ -45,10 +45,6 @@ const Stage = ({
   const dragData = React.useRef({ x: 0, y: 0 });
   const [spaceIsPressed, setSpaceIsPressed] = React.useState(false);
 
-  // 导出函数
-  if (outOptions) {
-    outOptions({ setMenuOpen, setMenuCoordinates })
-  }
 
   const setStageRect = React.useCallback(() => {
     stageRef.current = wrapper.current.getBoundingClientRect();
@@ -175,10 +171,6 @@ const Stage = ({
       });
     }
   };
-  // 导出addNode
-  if (outOptions) {
-    outOptions({ addNode })
-  }
 
   const handleDocumentKeyUp = e => {
     if (e.which === 32) {
@@ -226,6 +218,15 @@ const Stage = ({
   }
 
   const menuOptions = generate_menu_options()
+
+  // 导出函数
+  if (outOptions) {
+    outOptions({
+      addNode,
+      setMenuOpen,
+      setMenuCoordinates,
+    })
+  }
 
   return (
     <Draggable
