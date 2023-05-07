@@ -56,19 +56,22 @@ export let NodeEditor = (
     setDispatchNodes,
     filterNodeTypes,
     runNode,
-    outOptions,
-    onOptionSelected,
+    outOptions = null,
+    onOptionSelected = null,
   },
   ref
 ) => {
   const editorId = useId();
   const cache = React.useRef(new Cache());
   // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
-  outOptions({
-    refreshCache: () => {
-      cache.current = new Cache()
-    }
-  })
+  if (outOptions) {
+    outOptions({
+      refreshCache: () => {
+        cache.current = new Cache()
+      }
+    })
+  }
+
 
   const stage = React.useRef();
   const [sideEffectToasts, setSideEffectToasts] = React.useState()
