@@ -7,7 +7,7 @@ import {
   StageContext,
   ContextContext,
   EditorIdContext,
-  OuterContext
+  OwnerContext
 } from "../../context";
 import Control from "../Control/Control";
 import Connection from "../Connection/Connection";
@@ -262,7 +262,7 @@ const Port = ({
       );
     }
   };
-  let outer = useContext(OuterContext)
+  let outer = useContext(OwnerContext)
   const handleDragEnd = e => {
     const droppedOnPort = !!e.target.dataset.portName;
 

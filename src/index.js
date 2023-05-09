@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useId } from "@reach/auto-id";
 import Stage, { generate_menu_option } from "./components/Stage/Stage";
 import Node from "./components/Node/Node";
@@ -15,7 +15,7 @@ import {
   StageContext,
   CacheContext,
   EditorIdContext,
-  OuterContext
+  OwnerContext
 } from "./context";
 import { createConnections } from "./connectionCalculator";
 import nodesReducer, {
@@ -32,7 +32,7 @@ import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
 
 export let generateMenuOption = generate_menu_option;
-export let OutContext = OuterContext
+export let Ower = OwnerContext
 const defaultContext = {};
 
 export let NodeEditor = (
@@ -57,16 +57,13 @@ export let NodeEditor = (
     setDispatchNodes,
     filterNodeTypes,
     runNode,
-    outOptions = null,
     onOptionSelected = null,
   },
   ref
 ) => {
+  const owner = useContext(OwnerContext)
   const editorId = useId();
   const cache = React.useRef(new Cache());
-
-
-
   const stage = React.useRef();
   const [sideEffectToasts, setSideEffectToasts] = React.useState()
   const [toasts, dispatchToasts] = React.useReducer(toastsReducer, []);
@@ -153,8 +150,8 @@ export let NodeEditor = (
     }
   }, [sideEffectToasts])
 
-  if (outOptions) {
-    outOptions({
+  if (owner) {
+    owner.outOptions({
       // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
       refreshCache: () => {
         cache.current = new Cache()
@@ -219,7 +216,6 @@ export let NodeEditor = (
                           </React.Fragment>
                         }
                         filterNodeTypes={filterNodeTypes}
-                        outOptions={outOptions}
                         onOptionSelected={onOptionSelected}
                       >
                         {!hideComments &&

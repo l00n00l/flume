@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Stage.css";
 import { Portal } from "react-portal";
 import ContextMenu from "../ContextMenu/ContextMenu";
-import { NodeTypesContext, NodeDispatchContext } from "../../context";
+import { NodeTypesContext, NodeDispatchContext, OwnerContext } from "../../context";
 import Draggable from "../Draggable/Draggable";
 import orderBy from "lodash/orderBy";
 import clamp from "lodash/clamp";
@@ -33,9 +33,9 @@ const Stage = ({
   disablePan,
   disableZoom,
   filterNodeTypes,
-  outOptions = null,
   onOptionSelected = null,
 }) => {
+  const owner = React.useContext(OwnerContext);
   const nodeTypes = React.useContext(NodeTypesContext);
   const dispatchNodes = React.useContext(NodeDispatchContext);
   const wrapper = React.useRef();
@@ -220,11 +220,12 @@ const Stage = ({
   const menuOptions = generate_menu_options()
 
   // 导出函数
-  if (outOptions) {
-    outOptions({
+  if (owner) {
+    owner.outOptions({
       addNode,
       setMenuOpen,
       setMenuCoordinates,
+      handleContextMenu,
     })
   }
 
