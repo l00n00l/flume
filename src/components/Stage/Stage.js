@@ -32,7 +32,6 @@ const Stage = ({
   disableComments,
   disablePan,
   disableZoom,
-  filterNodeTypes,
   onOptionSelected = null,
 }) => {
   const owner = React.useContext(OwnerContext);
@@ -257,7 +256,6 @@ const Stage = ({
             onRequestClose={closeContextMenu}
             onOptionSelected={onOptionSelected || addNode}
             label="Add Node"
-            filterNodeTypes={filterNodeTypes}
           />
         </Portal>
       ) : null}

@@ -54,7 +54,6 @@ export let NodeEditor = (
     circularBehavior,
     renderNodeHeader,
     debug,
-    filterNodeTypes,
     runNode,
     onOptionSelected = null,
   },
@@ -215,7 +214,6 @@ export let NodeEditor = (
                             />
                           </React.Fragment>
                         }
-                        filterNodeTypes={filterNodeTypes}
                         onOptionSelected={onOptionSelected}
                       >
                         {!hideComments &&

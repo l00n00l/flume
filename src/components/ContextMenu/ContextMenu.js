@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ContextMenu.css";
 import clamp from "lodash/clamp";
 import { nanoid } from "nanoid/non-secure/index";
+import { OwnerContext } from "../../context";
 
 const ContextMenu = ({
   x,
@@ -13,8 +14,8 @@ const ContextMenu = ({
   hideHeader,
   hideFilter,
   emptyText,
-  filterNodeTypes
 }) => {
+  const owner = React.useContext(OwnerContext);
   const menuWrapper = React.useRef();
   const menuOptionsWrapper = React.useRef();
   const filterInput = React.useRef();
@@ -78,20 +79,10 @@ const ContextMenu = ({
     }
     let opts = filterOptions(filter, options)
     setFilterOptions(opts)
-    if (filterNodeTypes) {
-      filterNodeTypes(filter, opts, setFilterOptions, filterOptions)
+    if (owner) {
+      owner.filterNodeTypes(filter, opts, setFilterOptions, filterOptions)
     }
   }, [filter, options])
-
-  // const filteredOptions = React.useMemo(() => {
-  //   console.log("filteredOptions")
-  //   if (!filter) return options;
-  //   if (filterNodeTypes) {
-  //     return filterNodeTypes(filter, options)
-  //   }
-  //   const lowerFilter = filter.toLowerCase();
-  //   return options.filter(opt => opt.label.toLowerCase().includes(lowerFilter));
-  // }, [filter, options]);
 
   const handleFilterChange = e => {
     const value = e.target.value;
