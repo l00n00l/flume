@@ -55,7 +55,6 @@ export let NodeEditor = (
     renderNodeHeader,
     debug,
     runNode,
-    onOptionSelected = null,
   },
   ref
 ) => {
@@ -214,7 +213,6 @@ export let NodeEditor = (
                             />
                           </React.Fragment>
                         }
-                        onOptionSelected={onOptionSelected}
                       >
                         {!hideComments &&
                           Object.values(comments).map(comment => (

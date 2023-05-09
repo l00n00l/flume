@@ -32,7 +32,6 @@ const Stage = ({
   disableComments,
   disablePan,
   disableZoom,
-  onOptionSelected = null,
 }) => {
   const owner = React.useContext(OwnerContext);
   const nodeTypes = React.useContext(NodeTypesContext);
@@ -254,7 +253,13 @@ const Stage = ({
             y={menuCoordinates.y}
             options={menuOptions}
             onRequestClose={closeContextMenu}
-            onOptionSelected={onOptionSelected || addNode}
+            onOptionSelected={(option) => {
+              if (owner) {
+                owner.onOptionSelected(option)
+              } else {
+                addNode(option)
+              }
+            }}
             label="Add Node"
           />
         </Portal>
