@@ -67,7 +67,7 @@ const ContextMenu = ({
 
   const [filteredOptions, setFilterOptions] = React.useState([])
 
-  function filterOptions(filter, options){
+  function filterOptions(filter, options) {
     const lowerFilter = filter.toLowerCase();
     return options.filter(options => options.label.toLowerCase().includes(lowerFilter));
   }
@@ -139,6 +139,12 @@ const ContextMenu = ({
       }
     }
   }, [selectedIndex]);
+
+  if (owner) {
+    owner.outOptions({
+      setFilter,
+    })
+  }
 
   return (
     <div
