@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./IoPorts.css";
 import { Portal } from "react-portal";
 import {
@@ -6,7 +6,8 @@ import {
   ConnectionRecalculateContext,
   StageContext,
   ContextContext,
-  EditorIdContext
+  EditorIdContext,
+  OuterContext
 } from "../../context";
 import Control from "../Control/Control";
 import Connection from "../Connection/Connection";
@@ -15,7 +16,7 @@ import usePrevious from "../../hooks/usePrevious";
 import { calculateCurve, getPortRect } from "../../connectionCalculator";
 import { STAGE_ID, DRAG_CONNECTION_ID } from '../../constants'
 
-function useTransputs (transputsFn, transputType, nodeId, inputData, connections) {
+function useTransputs(transputsFn, transputType, nodeId, inputData, connections) {
   const nodesDispatch = React.useContext(NodeDispatchContext);
   const executionContext = React.useContext(ContextContext);
 
@@ -120,7 +121,7 @@ const Input = ({
       triggerRecalculation();
     }
   }, [isConnected, prevConnected, triggerRecalculation]);
-  
+
   return (
     <div
       data-flume-component="port-input"
@@ -149,20 +150,20 @@ const Input = ({
           <div className={styles.controls}>
             {
               controls.map(control => (
-                  <Control
-                    {...control}
-                    nodeId={nodeId}
-                    portName={name}
-                    triggerRecalculation={triggerRecalculation}
-                    updateNodeConnections={updateNodeConnections}
-                    inputLabel={label}
-                    data={data[control.name]}
-                    allData={data}
-                    key={control.name}
-                    inputData={inputData}
-                    isMonoControl={controls.length === 1}
-                  />
-                ))
+                <Control
+                  {...control}
+                  nodeId={nodeId}
+                  portName={name}
+                  triggerRecalculation={triggerRecalculation}
+                  updateNodeConnections={updateNodeConnections}
+                  inputLabel={label}
+                  data={data[control.name]}
+                  allData={data}
+                  key={control.name}
+                  inputData={inputData}
+                  isMonoControl={controls.length === 1}
+                />
+              ))
             }
           </div>
         )
@@ -261,7 +262,7 @@ const Port = ({
       );
     }
   };
-
+  let outer = useContext(OuterContext)
   const handleDragEnd = e => {
     const droppedOnPort = !!e.target.dataset.portName;
 
@@ -319,6 +320,12 @@ const Port = ({
             });
             triggerRecalculation();
           }
+        }
+      }
+      // 执行自定义内容
+      else {
+        if (outer) {
+          outer.onConnectToSpace(e, nodeId)
         }
       }
     }
@@ -381,7 +388,6 @@ const Port = ({
       document.addEventListener("mousemove", handleDrag);
     }
   };
-
   return (
     <React.Fragment>
       <div

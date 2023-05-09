@@ -14,7 +14,8 @@ import {
   ContextContext,
   StageContext,
   CacheContext,
-  EditorIdContext
+  EditorIdContext,
+  OuterContext
 } from "./context";
 import { createConnections } from "./connectionCalculator";
 import nodesReducer, {
@@ -31,7 +32,7 @@ import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
 
 export let generateMenuOption = generate_menu_option;
-
+export let OutContext = OuterContext
 const defaultContext = {};
 
 export let NodeEditor = (
