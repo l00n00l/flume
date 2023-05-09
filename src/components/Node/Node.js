@@ -4,7 +4,8 @@ import {
   NodeTypesContext,
   NodeDispatchContext,
   StageContext,
-  CacheContext
+  CacheContext,
+  OwnerContext,
 } from "../../context";
 import { getPortRect, calculateCurve } from "../../connectionCalculator";
 import { Portal } from "react-portal";
@@ -24,8 +25,8 @@ const Node = ({
   root,
   onDragStart,
   renderNodeHeader,
-  runNode = null
 }) => {
+  const owner = React.useContext(OwnerContext);
   const cache = React.useContext(CacheContext);
   const nodeTypes = React.useContext(NodeTypesContext);
   const nodesDispatch = React.useContext(NodeDispatchContext);
@@ -157,8 +158,8 @@ const Node = ({
         deleteNode();
         break;
       case "runNode":
-        if (runNode) {
-          runNode(id)
+        if (owner) {
+          owner.runNode(id)
         }
         break;
       default:
