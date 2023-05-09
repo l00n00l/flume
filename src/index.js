@@ -54,7 +54,6 @@ export let NodeEditor = (
     circularBehavior,
     renderNodeHeader,
     debug,
-    setDispatchNodes,
     filterNodeTypes,
     runNode,
     onOptionSelected = null,
@@ -77,8 +76,9 @@ export let NodeEditor = (
     () => getInitialNodes(initialNodes, defaultNodes, nodeTypes, portTypes, context)
   );
 
-  if (setDispatchNodes) {
-    setDispatchNodes(dispatchNodes, getInitialNodes)
+  if (owner) {
+    owner.dispatchNodes = dispatchNodes
+    owner.getInitialNodes = getInitialNodes
   }
 
   const [comments, dispatchComments] = React.useReducer(
