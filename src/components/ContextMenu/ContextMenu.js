@@ -143,6 +143,8 @@ const ContextMenu = ({
   if (owner) {
     owner.outOptions({
       setFilter,
+      setFilterOptions,
+      filterOptions,
     })
   }
 
