@@ -46,6 +46,7 @@
   }
 }
 .transput{
+  width: auto;
   display: flex;
   align-items: center;
   margin-top: 6px;
@@ -73,6 +74,7 @@
 .portLabel{
   font-size: 13px;
   font-weight: 400;
+  width: 100%;
 }
 .port{
   width: 14px;
