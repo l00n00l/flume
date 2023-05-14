@@ -37,14 +37,14 @@ const TextInput = ({
         <input
           data-flume-component="text-input-number"
           onKeyDown={e => {
-            if(e.keyCode === 69){
+            if (e.keyCode === 69) {
               e.preventDefault()
               return false;
             }
           }}
           onChange={e => {
             let inputValue = e.target.value.replace(/e/g, "");
-            if(process){
+            if (process) {
               inputValue = process(inputValue, data)
             }
             if (!!inputValue) {
@@ -74,6 +74,7 @@ const TextInput = ({
         />
       ) : (
         <textarea
+          rows={1}
           data-flume-component="text-input-textarea"
           onChange={e => onChange(e.target.value)}
           onMouseDown={handlePossibleResize}

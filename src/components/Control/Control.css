@@ -3,12 +3,15 @@
   padding-right: 3px;
   padding-top: 3px;
   padding-bottom: 5px;
+  display: flex;
 }
 .label {
   font-size: 14px;
 }
 .controlLabel {
   font-size: 13px;
-  display: inline-block;
   margin-left: 2px;
+  /* float: left; */
+  display: flex;
+  align-items: center; 
 }
