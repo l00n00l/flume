@@ -192,7 +192,8 @@ const Output = ({
         e.stopPropagation();
       }}
     >
-      <label data-flume-component="port-label" className={styles.portLabel}>{label || defaultLabel}</label>
+      <span data-flume-component="port-label"
+        className={styles.portLabel}>{label || defaultLabel}</span>
       <Port
         type={type}
         name={name}

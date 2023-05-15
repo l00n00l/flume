@@ -36,9 +36,9 @@ const Select = ({
   };
 
   const handleOptionSelected = option => {
-    if(allowMultiple){
+    if (allowMultiple) {
       onChange([...data, option.value]);
-    }else{
+    } else {
       onChange(option.value)
     }
   };
@@ -49,8 +49,8 @@ const Select = ({
 
   const getFilteredOptions = () => (
     allowMultiple ?
-    options.filter(opt => !data.includes(opt.value))
-    : options
+      options.filter(opt => !data.includes(opt.value))
+      : options
   )
 
   const selectedOption = React.useMemo(() => {
@@ -107,6 +107,7 @@ const Select = ({
             options={getFilteredOptions()}
             onOptionSelected={handleOptionSelected}
             onRequestClose={closeDrawer}
+            from="select"
           />
         </Portal>
       )}

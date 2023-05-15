@@ -14,6 +14,7 @@ const ContextMenu = ({
   hideHeader,
   hideFilter,
   emptyText,
+  from = null,
 }) => {
   const owner = React.useContext(OwnerContext);
   const menuWrapper = React.useRef();
@@ -79,7 +80,7 @@ const ContextMenu = ({
     }
     let opts = filterOptions(filter, options)
     setFilterOptions(opts)
-    if (owner) {
+    if (owner && !from) {
       owner.filterNodeTypes(filter, opts, setFilterOptions, filterOptions)
     }
   }, [filter, options])
