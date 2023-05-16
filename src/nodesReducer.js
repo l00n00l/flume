@@ -227,9 +227,12 @@ const getDefaultData = ({ node, nodeType, portTypes, context }) => {
 const nodesReducer = (
   nodes,
   action = {},
-  { nodeTypes, portTypes, cache, circularBehavior, context },
+  { nodeTypes, portTypes, cache, circularBehavior, context, owner },
   dispatchToasts
 ) => {
+  if (owner) {
+    owner.onNodeAction(nodes, action)
+  }
   switch (action.type) {
     case "ADD_CONNECTION": {
       const { input, output } = action;

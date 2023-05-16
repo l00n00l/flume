@@ -66,7 +66,7 @@ export let NodeEditor = (
   const [nodes, dispatchNodes] = React.useReducer(
     connectNodesReducer(
       nodesReducer,
-      { nodeTypes, portTypes, cache, circularBehavior, context },
+      { nodeTypes, portTypes, cache, circularBehavior, context, owner },
       setSideEffectToasts
     ),
     {},
