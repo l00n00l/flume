@@ -326,7 +326,7 @@ const Port = ({
       // 执行自定义内容
       else {
         if (outer) {
-          outer.onConnectToSpace(e, nodeId)
+          outer.onConnectToSpace(e, nodeId, e.target.dataset.portName)
         }
       }
     }
