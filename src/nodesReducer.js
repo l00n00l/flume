@@ -346,6 +346,7 @@ const nodesReducer = (
 
         for (const portName in node.connections.inputs) {
           let output = node.connections.inputs[portName][0]
+          if (!output) continue
           let input = {
             nodeId: node.id,
             portName: portName
@@ -355,6 +356,7 @@ const nodesReducer = (
 
         for (const portName in node.connections.outputs) {
           let input = node.connections.outputs[portName][0]
+          if (!input) continue
           let output = {
             nodeId: node.id,
             portName: portName
@@ -371,23 +373,21 @@ const nodesReducer = (
       const node = nodes[nodeId]
 
       for (const portName in node.connections.inputs) {
+        let input = { nodeId, portName }
+        clearPortsCache(nodeId, portName, "input")
         let output = node.connections.inputs[portName][0]
-        let input = {
-          nodeId: node.id,
-          portName: portName
+        if (output) {
+          clearConnectionCache(input, output)
         }
-        clearConnectionCache(input, output)
-        clearPortsCache(node.id, portName, "input")
       }
 
       for (const portName in node.connections.outputs) {
+        let output = { nodeId, portName }
+        clearPortsCache(nodeId, portName, "output")
         let input = node.connections.outputs[portName][0]
-        let output = {
-          nodeId: node.id,
-          portName: portName
+        if (input) {
+          clearConnectionCache(input, output)
         }
-        clearConnectionCache(input, output)
-        clearPortsCache(node.id, portName, "output")
       }
 
       return removeNode(nodes, nodeId);
