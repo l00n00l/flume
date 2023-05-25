@@ -233,6 +233,19 @@ const nodesReducer = (
   if (owner) {
     owner.onNodeAction(nodes, action, nanoid)
   }
+
+  const clearConnectionCache = (input, output) => {
+    const id =
+      output.nodeId + output.portName + input.nodeId + input.portName;
+    delete cache.current.connections[id];
+    deleteConnection({ id });
+  }
+
+  const clearPortsCache = (nodeId, portName, type) => {
+    const id = `${nodeId}${portName}${type}`
+    delete cache.current.ports[id];
+  }
+
   switch (action.type) {
     case "ADD_CONNECTION": {
       const { input, output } = action;
@@ -269,10 +282,7 @@ const nodesReducer = (
 
     case "REMOVE_CONNECTION": {
       const { input, output } = action;
-      const id =
-        output.nodeId + output.portName + input.nodeId + input.portName;
-      delete cache.current.connections[id];
-      deleteConnection({ id });
+      clearConnectionCache(input, output)
       return removeConnection(nodes, input, output);
     }
 
@@ -339,6 +349,8 @@ const nodesReducer = (
             portName: portName
           }
           _nodes[output.nodeId].connections.outputs[output.portName] = [input]
+          clearConnectionCache(input, output)
+          clearPortsCache(node.id, portName, "input")
         }
 
         for (const portName in node.connections.outputs) {
@@ -348,6 +360,8 @@ const nodesReducer = (
             portName: portName
           }
           _nodes[input.nodeId].connections.inputs[input.portName] = [output]
+          clearConnectionCache(input, output)
+          clearPortsCache(node.id, portName, "output")
         }
 
         return _nodes
