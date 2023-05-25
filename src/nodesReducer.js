@@ -231,7 +231,7 @@ const nodesReducer = (
   dispatchToasts
 ) => {
   if (owner) {
-    owner.onNodeAction(nodes, action)
+    owner.onNodeAction(nodes, action, nanoid)
   }
   switch (action.type) {
     case "ADD_CONNECTION": {
