@@ -282,6 +282,8 @@ const nodesReducer = (
 
     case "REMOVE_CONNECTION": {
       const { input, output } = action;
+      clearPortsCache(input.nodeId, input.portName, "input")
+      clearPortsCache(output.nodeId, output.portName, "output")
       clearConnectionCache(input, output)
       return removeConnection(nodes, input, output);
     }
@@ -349,8 +351,6 @@ const nodesReducer = (
             portName: portName
           }
           _nodes[output.nodeId].connections.outputs[output.portName] = [input]
-          clearConnectionCache(input, output)
-          clearPortsCache(node.id, portName, "input")
         }
 
         for (const portName in node.connections.outputs) {
@@ -360,8 +360,6 @@ const nodesReducer = (
             portName: portName
           }
           _nodes[input.nodeId].connections.inputs[input.portName] = [output]
-          clearConnectionCache(input, output)
-          clearPortsCache(node.id, portName, "output")
         }
 
         return _nodes
@@ -371,6 +369,26 @@ const nodesReducer = (
     case "REMOVE_NODE": {
       const { nodeId } = action;
       const node = nodes[nodeId]
+
+      for (const portName in node.connections.inputs) {
+        let output = node.connections.inputs[portName][0]
+        let input = {
+          nodeId: node.id,
+          portName: portName
+        }
+        clearConnectionCache(input, output)
+        clearPortsCache(node.id, portName, "input")
+      }
+
+      for (const portName in node.connections.outputs) {
+        let input = node.connections.outputs[portName][0]
+        let output = {
+          nodeId: node.id,
+          portName: portName
+        }
+        clearConnectionCache(input, output)
+        clearPortsCache(node.id, portName, "output")
+      }
 
       return removeNode(nodes, nodeId);
     }
