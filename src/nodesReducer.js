@@ -295,36 +295,43 @@ const nodesReducer = (
     }
 
     case "ADD_NODE": {
-      const { x, y, nodeType, id, defaultNode } = action;
-      const newNodeId = id || nanoid(10);
-      const newNode = {
-        id: newNodeId,
-        x,
-        y,
-        type: nodeType,
-        width: nodeTypes[nodeType].initialWidth || 200,
-        connections: {
-          inputs: {},
-          outputs: {}
-        },
-        inputData: {}
-      };
-      newNode.inputData = getDefaultData({
-        node: newNode,
-        nodeType: nodeTypes[nodeType],
-        portTypes,
-        context
-      });
-      if (defaultNode) {
-        newNode.defaultNode = true;
+      const { x, y, nodeType, id, defaultNode, node = null } = action;
+      if (node == null) {
+        const newNodeId = id || nanoid(10);
+        const newNode = {
+          id: newNodeId,
+          x,
+          y,
+          type: nodeType,
+          width: nodeTypes[nodeType].initialWidth || 200,
+          connections: {
+            inputs: {},
+            outputs: {}
+          },
+          inputData: {}
+        };
+        newNode.inputData = getDefaultData({
+          node: newNode,
+          nodeType: nodeTypes[nodeType],
+          portTypes,
+          context
+        });
+        if (defaultNode) {
+          newNode.defaultNode = true;
+        }
+        if (nodeTypes[nodeType].root) {
+          newNode.root = true;
+        }
+        return {
+          ...nodes,
+          [newNodeId]: newNode
+        };
+      } else {
+        return {
+          ...nodes,
+          [node.id]: node
+        }
       }
-      if (nodeTypes[nodeType].root) {
-        newNode.root = true;
-      }
-      return {
-        ...nodes,
-        [newNodeId]: newNode
-      };
     }
 
     case "REMOVE_NODE": {
