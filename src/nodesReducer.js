@@ -327,15 +327,37 @@ const nodesReducer = (
           [newNodeId]: newNode
         };
       } else {
-        return {
+        let _nodes = {
           ...nodes,
           [node.id]: node
         }
+
+        for (const portName in node.connections.inputs) {
+          let output = node.connections.inputs[portName][0]
+          let input = {
+            nodeId: node.id,
+            portName: portName
+          }
+          _nodes[output.nodeId].connections.outputs[output.portName] = [input]
+        }
+
+        for (const portName in node.connections.outputs) {
+          let input = node.connections.outputs[portName][0]
+          let output = {
+            nodeId: node.id,
+            portName: portName
+          }
+          _nodes[input.nodeId].connections.inputs[input.portName] = [output]
+        }
+
+        return _nodes
       }
     }
 
     case "REMOVE_NODE": {
       const { nodeId } = action;
+      const node = nodes[nodeId]
+
       return removeNode(nodes, nodeId);
     }
 
