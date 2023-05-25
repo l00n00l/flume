@@ -116,6 +116,12 @@ const Node = ({
     }
   };
 
+  if (owner) {
+    owner.outOptions({
+      [`updateNodeConnections_${id}`]: updateNodeConnections
+    })
+  }
+
   const stopDrag = (e, coordinates) => {
     nodesDispatch({
       type: "SET_NODE_COORDINATES",

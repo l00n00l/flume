@@ -153,6 +153,7 @@ export let NodeEditor = (
       refreshCache: () => {
         cache.current = new Cache()
       },
+      recalculateStageRect,
     })
   }
 
