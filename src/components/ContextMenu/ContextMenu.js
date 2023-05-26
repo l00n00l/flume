@@ -147,6 +147,13 @@ const ContextMenu = ({
       setFilterOptions,
       filterOptions,
     })
+
+    React.useEffect(() => {
+      owner.onMenuStateChange(true, hideFilter)
+      return () => {
+        owner.onMenuStateChange(false, hideFilter)
+      }
+    }, [])
   }
 
   return (

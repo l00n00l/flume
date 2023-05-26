@@ -217,12 +217,6 @@ const Stage = ({
 
   const menuOptions = generate_menu_options()
 
-  React.useEffect(() => {
-    if (owner) {
-      owner.onMenuStateChange(menuOpen)
-    }
-  }, [menuOpen])
-
   // 导出函数
   if (owner) {
     owner.outOptions({
