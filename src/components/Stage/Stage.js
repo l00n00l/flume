@@ -224,6 +224,7 @@ const Stage = ({
       setMenuOpen,
       setMenuCoordinates,
       handleContextMenu,
+      draggableRef: wrapper
     })
   }
 
