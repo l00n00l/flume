@@ -38,6 +38,7 @@ const Stage = ({
   const dispatchNodes = React.useContext(NodeDispatchContext);
   const wrapper = React.useRef();
   const translateWrapper = React.useRef();
+  const scaleWrapper = React.useRef();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [menuCoordinates, setMenuCoordinates] = React.useState({ x: 0, y: 0 });
   const dragData = React.useRef({ x: 0, y: 0 });
@@ -224,7 +225,12 @@ const Stage = ({
       setMenuOpen,
       setMenuCoordinates,
       handleContextMenu,
-      draggableRef: wrapper
+      draggableRef: wrapper,
+      translateWrapper,
+      scaleWrapper,
+      dispatchStageState,
+      stagetScale: scale,
+      stagetTranslate: translate,
     })
   }
 
@@ -240,7 +246,7 @@ const Stage = ({
       onDragStart={handleDragStart}
       onDrag={handleMouseDrag}
       onDragEnd={handleDragEnd}
-      onKeyDown={handleKeyDown}
+      onKeyDown={spaceToPan ? handleKeyDown : null}
       tabIndex={-1}
       stageState={{ scale, translate }}
       style={{ cursor: spaceIsPressed && spaceToPan ? "grab" : "" }}
@@ -271,6 +277,7 @@ const Stage = ({
         style={{ transform: `translate(${-translate.x}px, ${-translate.y}px)` }}
       >
         <div
+          ref={scaleWrapper}
           className={styles.scaleWrapper}
           style={{ transform: `scale(${scale})` }}
         >
