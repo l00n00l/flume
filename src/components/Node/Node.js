@@ -173,6 +173,12 @@ const Node = ({
     }
   };
 
+  const onMouseDown = (e) => {
+    if (owner) {
+      owner.onNodeClick(id, nodeWrapper.current)
+    }
+  }
+
   return (
     <Draggable
       className={styles.wrapper}
@@ -192,6 +198,7 @@ const Node = ({
       onContextMenu={handleContextMenu}
       stageState={stageState}
       stageRect={stageRect}
+      onMouseDown={onMouseDown}
     >
       {renderNodeHeader ? (
         renderNodeHeader(NodeHeader, currentNodeType, {
