@@ -116,12 +116,6 @@ const Node = ({
     }
   };
 
-  if (owner) {
-    owner.outOptions({
-      [`updateNodeConnections_${id}`]: updateNodeConnections
-    })
-  }
-
   const stopDrag = (e, coordinates) => {
     nodesDispatch({
       type: "SET_NODE_COORDINATES",
@@ -175,8 +169,14 @@ const Node = ({
 
   const onMouseDown = (e) => {
     if (owner) {
-      owner.onNodeClick(id, nodeWrapper.current)
+      owner.onNodeClick(e, id, nodeWrapper.current)
     }
+  }
+
+  if (owner) {
+    owner.outOptions({
+      [`updateNodeConnections_${id}`]: updateNodeConnections
+    })
   }
 
   return (
