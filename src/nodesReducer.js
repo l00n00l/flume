@@ -223,7 +223,6 @@ const getDefaultData = ({ node, nodeType, portTypes, context }) => {
     return obj;
   }, {});
 };
-
 const nodesReducer = (
   nodes,
   action = {},
@@ -248,21 +247,24 @@ const nodesReducer = (
 
   const clearNodeCache = (nodeId, nodes) => {
     const node = nodes[nodeId]
+
     for (const portName in node.connections.inputs) {
       let input = { nodeId, portName }
       clearPortsCache(nodeId, portName, "input")
       let output = node.connections.inputs[portName][0]
       if (output) {
+        clearPortsCache(output.nodeId, output.portName, "output")
         clearConnectionCache(input, output)
       }
     }
 
     for (const portName in node.connections.outputs) {
-      let output = { nodeId, portName }
       clearPortsCache(nodeId, portName, "output")
+      let output = { nodeId, portName }
       let input = node.connections.outputs[portName][0]
       if (input) {
-        clearConnectionCache(input, output)
+        clearPortsCache(input.nodeId, input.portName, "input")
+      clearConnectionCache(input, output)
       }
     }
   }
