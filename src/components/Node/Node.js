@@ -169,7 +169,7 @@ const Node = ({
 
   const onMouseDown = (e) => {
     if (owner) {
-      owner.onNodeClick(e, id, nodeWrapper.current)
+      owner.onNodeMouseDown(e, id, nodeWrapper.current)
     }
   }
 

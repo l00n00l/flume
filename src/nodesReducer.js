@@ -246,6 +246,53 @@ const nodesReducer = (
     delete cache.current.ports[id];
   }
 
+  const clearNodeCache = (nodeId, nodes) => {
+    const node = nodes[nodeId]
+    for (const portName in node.connections.inputs) {
+      let input = { nodeId, portName }
+      clearPortsCache(nodeId, portName, "input")
+      let output = node.connections.inputs[portName][0]
+      if (output) {
+        clearConnectionCache(input, output)
+      }
+    }
+
+    for (const portName in node.connections.outputs) {
+      let output = { nodeId, portName }
+      clearPortsCache(nodeId, portName, "output")
+      let input = node.connections.outputs[portName][0]
+      if (input) {
+        clearConnectionCache(input, output)
+      }
+    }
+  }
+
+  const rebuildNodeConnections = (nodes, node) => {
+    for (const portName in node.connections.inputs) {
+      let from = node.connections.inputs[portName][0]
+      if (!from) continue
+      let targetNode = nodes[from.nodeId]
+      if (!targetNode) continue
+      targetNode.connections.outputs[from.portName] = [{
+        nodeId: node.id,
+        portName: portName
+      }]
+    }
+
+    for (const portName in node.connections.outputs) {
+      let to = node.connections.outputs[portName][0]
+      if (!to) continue
+      let targetNode = nodes[to.nodeId]
+      if (!targetNode) continue
+      targetNode.connections.inputs[to.portName] = [{
+        nodeId: node.id,
+        portName: portName
+      }]
+    }
+
+    return nodes
+  }
+
   switch (action.type) {
     case "ADD_CONNECTION": {
       const { input, output } = action;
@@ -339,58 +386,40 @@ const nodesReducer = (
           [newNodeId]: newNode
         };
       } else {
-        let _nodes = {
+        return rebuildNodeConnections({
           ...nodes,
           [node.id]: node
-        }
-
-        for (const portName in node.connections.inputs) {
-          let output = node.connections.inputs[portName][0]
-          if (!output) continue
-          let input = {
-            nodeId: node.id,
-            portName: portName
-          }
-          _nodes[output.nodeId].connections.outputs[output.portName] = [input]
-        }
-
-        for (const portName in node.connections.outputs) {
-          let input = node.connections.outputs[portName][0]
-          if (!input) continue
-          let output = {
-            nodeId: node.id,
-            portName: portName
-          }
-          _nodes[input.nodeId].connections.inputs[input.portName] = [output]
-        }
-
-        return _nodes
+        }, node)
       }
+    }
+    case "ADD_NODES": {
+      const { nodes: add_nodes } = action;
+      let _nodes = nodes
+      for (const node of add_nodes) {
+        _nodes = rebuildNodeConnections({
+          ..._nodes,
+          [node.id]: node
+        }, node)
+      }
+      return _nodes
     }
 
     case "REMOVE_NODE": {
       const { nodeId } = action;
-      const node = nodes[nodeId]
-
-      for (const portName in node.connections.inputs) {
-        let input = { nodeId, portName }
-        clearPortsCache(nodeId, portName, "input")
-        let output = node.connections.inputs[portName][0]
-        if (output) {
-          clearConnectionCache(input, output)
-        }
-      }
-
-      for (const portName in node.connections.outputs) {
-        let output = { nodeId, portName }
-        clearPortsCache(nodeId, portName, "output")
-        let input = node.connections.outputs[portName][0]
-        if (input) {
-          clearConnectionCache(input, output)
-        }
-      }
-
+      clearNodeCache(nodeId, nodes)
       return removeNode(nodes, nodeId);
+    }
+
+    case "REMOVE_NODES": {
+      const { nodeIds } = action;
+      let _nodes = nodes
+      for (const nodeId of nodeIds) {
+        clearNodeCache(nodeId, _nodes)
+      }
+      for (const nodeId of nodeIds) {
+        _nodes = removeNode(_nodes, nodeId);
+      }
+      return _nodes
     }
 
     case "HYDRATE_DEFAULT_NODES": {
