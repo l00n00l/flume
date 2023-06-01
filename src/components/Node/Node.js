@@ -173,6 +173,12 @@ const Node = ({
     }
   }
 
+  const onMouseUp = (e) => {
+    if (owner && owner.onNodeMouseUp) {
+      owner.onNodeMouseUp(e, id, nodeWrapper.current)
+    }
+  }
+
   if (owner && owner.outOptions) {
     owner.outOptions({
       [`updateNodeConnections_${id}`]: updateNodeConnections
@@ -199,6 +205,7 @@ const Node = ({
       stageState={stageState}
       stageRect={stageRect}
       onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
     >
       {renderNodeHeader ? (
         renderNodeHeader(NodeHeader, currentNodeType, {
