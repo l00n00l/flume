@@ -131,6 +131,7 @@ const Node = ({
 
   const startDrag = e => {
     onDragStart();
+    onNodeStartDrag()
   };
 
   const handleContextMenu = e => {
@@ -176,6 +177,12 @@ const Node = ({
   const onMouseUp = (e) => {
     if (owner && owner.onNodeMouseUp) {
       owner.onNodeMouseUp(e, id, nodeWrapper.current)
+    }
+  }
+
+  const onNodeStartDrag = () => {
+    if (owner && owner.onNodeStartDrag) {
+      owner.onNodeStartDrag(id, nodeWrapper.current)
     }
   }
 
