@@ -229,7 +229,7 @@ const nodesReducer = (
   { nodeTypes, portTypes, cache, circularBehavior, context, owner },
   dispatchToasts
 ) => {
-  if (owner) {
+  if (owner && owner.onNodeAction) {
     owner.onNodeAction(nodes, action, nanoid)
   }
 

@@ -141,7 +141,7 @@ const ContextMenu = ({
     }
   }, [selectedIndex]);
 
-  if (owner) {
+  if (owner && owner.outOptions) {
     owner.outOptions({
       setFilter,
       setFilterOptions,

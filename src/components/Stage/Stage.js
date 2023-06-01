@@ -219,7 +219,7 @@ const Stage = ({
   const menuOptions = generate_menu_options()
 
   // 导出函数
-  if (owner) {
+  if (owner && owner.outOptions) {
     owner.outOptions({
       addNode,
       setMenuOpen,
@@ -253,7 +253,7 @@ const Stage = ({
       disabled={disablePan || (spaceToPan && !spaceIsPressed)}
       data-flume-stage={true}
       onMouseDown={e => {
-        if (owner) {
+        if (owner && owner.onStageDraggableMouseDown) {
           owner.onStageDraggableMouseDown(e)
         }
       }}
@@ -266,7 +266,7 @@ const Stage = ({
             options={menuOptions}
             onRequestClose={closeContextMenu}
             onOptionSelected={(option) => {
-              if (owner) {
+              if (owner && owner.onOptionSelected) {
                 owner.onOptionSelected(option)
               } else {
                 addNode(option)

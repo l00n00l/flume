@@ -158,7 +158,7 @@ const Node = ({
         deleteNode();
         break;
       case "runNode":
-        if (owner) {
+        if (owner && owner.runNode) {
           owner.runNode(id)
         }
         break;
@@ -168,12 +168,12 @@ const Node = ({
   };
 
   const onMouseDown = (e) => {
-    if (owner) {
+    if (owner && owner.onNodeMouseDown) {
       owner.onNodeMouseDown(e, id, nodeWrapper.current)
     }
   }
 
-  if (owner) {
+  if (owner && owner.outOptions) {
     owner.outOptions({
       [`updateNodeConnections_${id}`]: updateNodeConnections
     })

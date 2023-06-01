@@ -148,7 +148,7 @@ export let NodeEditor = (
     }
   }, [sideEffectToasts])
 
-  if (owner) {
+  if (owner && owner.outOptions) {
     owner.outOptions({
       // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
       refreshCache: () => {
