@@ -8,6 +8,7 @@ export default ({
   onDragStart,
   onDrag,
   onDragEnd,
+  startDragDelayRef = null,
   onMouseDown,
   onTouchStart,
   disabled,
@@ -114,6 +115,10 @@ export default ({
     document.addEventListener("mouseup", endDragDelay);
     document.addEventListener("mousemove", checkDragDelay);
   };
+
+  if(startDragDelayRef){
+    startDragDelayRef.current = startDragDelay
+  }
 
   return (
     <div

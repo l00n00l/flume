@@ -179,9 +179,13 @@ const Node = ({
     }
   }
 
+  const startDragDelayRef = React.useRef(null)
+
   if (owner && owner.outOptions) {
     owner.outOptions({
-      [`updateNodeConnections_${id}`]: updateNodeConnections
+      [`updateNodeConnections_${id}`]: updateNodeConnections,
+      [`nodeDraggable_${id}`]: nodeWrapper,
+      [`startDragDelay_${id}`]: startDragDelayRef
     })
   }
 
@@ -206,6 +210,7 @@ const Node = ({
       stageRect={stageRect}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      startDragDelayRef={startDragDelayRef}
     >
       {renderNodeHeader ? (
         renderNodeHeader(NodeHeader, currentNodeType, {
