@@ -252,9 +252,9 @@ const Stage = ({
       style={{ cursor: spaceIsPressed && spaceToPan ? "grab" : "" }}
       disabled={disablePan || (spaceToPan && !spaceIsPressed)}
       data-flume-stage={true}
-      onMouseDown={async e => {
+      onMouseDown={e => {
         if (owner) {
-          await owner.onStageDraggableMouseDown(e)
+          owner.onStageDraggableMouseDown(e)
         }
       }}
     >

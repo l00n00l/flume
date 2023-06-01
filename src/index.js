@@ -30,6 +30,7 @@ import clamp from "lodash/clamp";
 import Cache from "./Cache";
 import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
+import { nanoid } from "nanoid/non-secure/index";
 
 export let generateMenuOption = generate_menu_option;
 export let Ower = OwnerContext
@@ -154,6 +155,7 @@ export let NodeEditor = (
         cache.current = new Cache()
       },
       recalculateStageRect,
+      nanoid,
     })
   }
 
