@@ -106,7 +106,10 @@ const Stage = ({
     dragData.current = {
       x: e.clientX,
       y: e.clientY
-    };
+    }; s
+    if (owner && owner.onStageStartDrag) {
+      owner.onStageStartDrag(e)
+    }
   };
 
   const handleMouseDrag = (coords, e) => {
@@ -254,7 +257,16 @@ const Stage = ({
       data-flume-stage={true}
       onMouseDown={e => {
         if (owner && owner.onStageDraggableMouseDown) {
-          owner.onStageDraggableMouseDown(e)
+          if (e.target == wrapper.current) {
+            owner.onStageDraggableMouseDown(e)
+          }
+        }
+      }}
+      onMouseUp={e => {
+        if (owner && owner.onStageDraggableMouseUp) {
+          if (e.target == wrapper.current) {
+            owner.onStageDraggableMouseUp(e)
+          }
         }
       }}
     >
