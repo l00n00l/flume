@@ -114,6 +114,8 @@ export const createSVG = ({
 export const getStageRef = editorId =>
   document.getElementById(`${CONNECTIONS_ID}${editorId}`);
 
+export let svgStyle = styles.svg
+
 export const createConnections = (nodes, {scale, stageId}, editorId) => {
   const stageRef = getStageRef(editorId);
   if(stageRef){

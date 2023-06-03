@@ -31,9 +31,12 @@ import Cache from "./Cache";
 import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
 import { nanoid } from "nanoid/non-secure/index";
+import { getStageRef, svgStyle } from "./connectionCalculator"
 
 export let generateMenuOption = generate_menu_option;
 export let Ower = OwnerContext
+export let GetSvgContainerRef = getStageRef
+export let SvgContainerStyle = svgStyle
 const defaultContext = {};
 
 export let NodeEditor = (
@@ -156,6 +159,7 @@ export let NodeEditor = (
       },
       recalculateStageRect,
       nanoid,
+      editorId,
     })
   }
 
