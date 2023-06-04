@@ -10,6 +10,9 @@ const TextInput = ({
   step,
   type,
   process = null,
+  nodeId,
+  portName,
+  name,
 }) => {
   const numberInput = React.useRef()
   const recalculateStageRect = React.useContext(RecalculateStageRectContext)
@@ -71,6 +74,9 @@ const TextInput = ({
           defaultValue={data}
           onDragStart={e => e.stopPropagation()}
           ref={numberInput}
+          data-node-id={nodeId}
+          data-port-name={portName}
+          data-name={name}
         />
       ) : (
         <textarea
@@ -83,6 +89,9 @@ const TextInput = ({
           className={styles.input}
           value={data}
           onDragStart={e => e.stopPropagation()}
+          data-node-id={nodeId}
+          data-port-name={portName}
+          data-name={name}
         />
       )}
     </div>

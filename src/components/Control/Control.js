@@ -50,7 +50,10 @@ const Control = ({
       updateNodeConnections,
       onChange,
       data,
-      process
+      process,
+      nodeId,
+      portName,
+      name,
     };
     switch (type) {
       case "select":
