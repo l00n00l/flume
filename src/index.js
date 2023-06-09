@@ -246,7 +246,7 @@ export let NodeEditor = (
                           id={`${DRAG_CONNECTION_ID}${editorId}`}
                         ></div>
                       </Stage>
-                      {owner && owner.refreshSelectedNodes()}
+                      {owner && owner.refreshNodeBoxShadow()}
                     </RecalculateStageRectContext.Provider>
                   </EditorIdContext.Provider>
                 </CacheContext.Provider>
