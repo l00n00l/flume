@@ -124,7 +124,9 @@ export default ({
     <div
       onMouseDown={e => {
         if (!disabled) {
-          startDragDelay(e);
+          if(e.button == 0){
+            startDragDelay(e);
+          }
         }
         if (onMouseDown) {
           onMouseDown(e);
