@@ -236,7 +236,7 @@ const Node = ({
         updateNodeConnections={updateNodeConnections}
         inputData={inputData}
       />
-      {menuOpen ? (
+      {/* {menuOpen ? (
         <Portal>
           <ContextMenu
             x={menuCoordinates.x}
@@ -264,7 +264,7 @@ const Node = ({
             emptyText="This node has no options."
           />
         </Portal>
-      ) : null}
+      ) : null} */}
     </Draggable>
   );
 };
