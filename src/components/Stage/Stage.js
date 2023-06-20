@@ -285,6 +285,7 @@ const Stage = ({
               }
             }}
             label="Add Node"
+            from="stage"
           />
         </Portal>
       ) : null}

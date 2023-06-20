@@ -262,6 +262,7 @@ const Node = ({
             hideFilter
             label="Node Options"
             emptyText="This node has no options."
+            from="node"
           />
         </Portal>
       ) : null} */}

@@ -202,6 +202,7 @@ export default ({
             ]}
             onRequestClose={closeContextMenu}
             onOptionSelected={handleMenuOption}
+            from="comment"
           />
         </Portal>
       ) : null}

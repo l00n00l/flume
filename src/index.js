@@ -32,11 +32,13 @@ import { STAGE_ID, DRAG_CONNECTION_ID } from "./constants";
 import styles from "./styles.css";
 import { nanoid } from "nanoid/non-secure/index";
 import { getStageRef, svgStyle } from "./connectionCalculator"
+import ContextMenu from "./components/ContextMenu/ContextMenu";
 
 export let generateMenuOption = generate_menu_option;
 export let Ower = OwnerContext
 export let GetSvgContainerRef = getStageRef
 export let SvgContainerStyle = svgStyle
+
 const defaultContext = {};
 
 export let NodeEditor = (
@@ -263,3 +265,4 @@ export { FlumeConfig, Controls, Colors } from "./typeBuilders";
 export { RootEngine } from "./RootEngine";
 export const useRootEngine = (nodes, engine, context, options = {}) =>
   Object.keys(nodes).length ? engine.resolveRootNode(nodes, { ...options, context }) : {};
+export { ContextMenu }
