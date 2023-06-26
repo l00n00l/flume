@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./TextInput.css";
-import { RecalculateStageRectContext } from '../../context'
-
+import { RecalculateStageRectContext, OwnerContext } from '../../context'
 const TextInput = ({
   placeholder,
   updateNodeConnections,
@@ -16,6 +15,7 @@ const TextInput = ({
 }) => {
   const numberInput = React.useRef()
   const recalculateStageRect = React.useContext(RecalculateStageRectContext)
+  const owner = React.useContext(OwnerContext)
 
   const handleDragEnd = () => {
     document.removeEventListener("mousemove", handleMouseMove);
@@ -32,6 +32,9 @@ const TextInput = ({
     recalculateStageRect();
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleDragEnd);
+    if (owner) {
+      owner.setInputing(true)
+    }
   };
 
   return (
@@ -65,6 +68,9 @@ const TextInput = ({
               onChange(0);
               numberInput.current.value = 0;
             }
+            if (owner) {
+              owner.setInputing(false)
+            }
           }}
           step={step || "1"}
           onMouseDown={handlePossibleResize}
@@ -92,6 +98,11 @@ const TextInput = ({
           data-node-id={nodeId}
           data-port-name={portName}
           data-name={name}
+          onBlur={e=>{
+            if (owner) {
+              owner.setInputing(false)
+            }
+          }}
         />
       )}
     </div>
