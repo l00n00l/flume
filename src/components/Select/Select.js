@@ -85,7 +85,7 @@ const Select = ({
             })}
           </div>
         ) : null
-      ) : data ? (
+      ) : (data || data == 0) ? (
         <SelectedOption
           wrapperRef={wrapper}
           option={selectedOption}
@@ -93,7 +93,7 @@ const Select = ({
         />
       ) : null}
       {
-        (allowMultiple || !data) &&
+        (allowMultiple || (!data && data != 0)) &&
         <div className={selectStyles.wrapper} ref={wrapper} onClick={openDrawer}>
           {placeholder}
         </div>
