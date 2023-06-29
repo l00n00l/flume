@@ -157,6 +157,13 @@ export default ({
     owner.outOptions({
       [`nodeDraggable_${id}`]: wrapper,
       [`startDragDelay_${id}`]: startDragDelayRef,
+      [`commentSetIsPickingColor_${id}`]: (value) => {
+        setIsPickingColor(value)
+        if (wrapper.current) {
+          let rect = wrapper.current.getBoundingClientRect()
+          setColorPickerCoordinates(rect)
+        }
+      }
     })
   }
 
@@ -210,7 +217,7 @@ export default ({
         onDragEnd={handleResizeEnd}
         data-flume-component="comment-resize-handle"
       />
-      {menuOpen ? (
+      {/* {menuOpen ? (
         <Portal>
           <ContextMenu
             hideFilter
@@ -239,7 +246,7 @@ export default ({
             from="comment"
           />
         </Portal>
-      ) : null}
+      ) : null} */}
       {isPickingColor ? (
         <Portal>
           <ColorPicker
