@@ -81,7 +81,7 @@ const ContextMenu = ({
     }
     let opts = filterOptions(filter, options)
     setFilterOptions(opts)
-    if (owner) {
+    if (owner && owner.onContextMenuFilter) {
       owner.onContextMenuFilter(filter, opts, setFilterOptions, filterOptions, from)
     }
 

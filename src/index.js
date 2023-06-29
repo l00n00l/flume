@@ -22,7 +22,7 @@ import nodesReducer, {
   connectNodesReducer,
   getInitialNodes
 } from "./nodesReducer";
-import commentsReducer from "./commentsReducer";
+import { connectCommentsReducer } from "./commentsReducer";
 import toastsReducer from "./toastsReducer";
 import stageReducer from "./stageReducer";
 import usePrevious from "./hooks/usePrevious";
@@ -79,13 +79,9 @@ export let NodeEditor = (
     () => getInitialNodes(initialNodes, defaultNodes, nodeTypes, portTypes, context)
   );
 
-  if (owner) {
-    owner.dispatchNodes = dispatchNodes
-    owner.getInitialNodes = getInitialNodes
-  }
 
   const [comments, dispatchComments] = React.useReducer(
-    commentsReducer,
+    connectCommentsReducer(owner),
     initialComments || {}
   );
   React.useEffect(() => {
@@ -154,6 +150,9 @@ export let NodeEditor = (
   }, [sideEffectToasts])
 
   if (owner && owner.outOptions) {
+    owner.dispatchNodes = dispatchNodes
+    owner.getInitialNodes = getInitialNodes
+    owner.dispatchComments = dispatchComments
     owner.outOptions({
       // 导出刷新cache, 当重新初始化所有的nodes的时候需要刷新cache
       refreshCache: () => {

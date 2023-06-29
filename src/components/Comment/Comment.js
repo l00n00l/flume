@@ -3,7 +3,7 @@ import styles from "./Comment.css";
 import Draggable from "../Draggable/Draggable";
 import ContextMenu from "../ContextMenu/ContextMenu";
 import ColorPicker from "../ColorPicker/ColorPicker";
-import { StageContext } from "../../context";
+import { StageContext, OwnerContext } from "../../context";
 import { Portal } from "react-portal";
 import clamp from "lodash/clamp";
 
@@ -20,6 +20,7 @@ export default ({
   onDragStart,
   isNew
 }) => {
+  const owner = React.useContext(OwnerContext);
   const stageState = React.useContext(StageContext);
   const wrapper = React.useRef();
   const textarea = React.useRef();
@@ -44,6 +45,7 @@ export default ({
 
   const startDrag = e => {
     onDragStart();
+    onNodeStartDrag()
   };
 
   const handleDrag = ({ x, y }) => {
@@ -130,6 +132,34 @@ export default ({
     }
   }, [isNew, dispatch, id]);
 
+  const startDragDelayRef = React.useRef(null)
+
+  const onMouseDown = (e) => {
+    if (owner && owner.onNodeMouseDown) {
+      owner.onNodeMouseDown(e, id, wrapper.current)
+    }
+  }
+
+  const onMouseUp = (e) => {
+    if (owner && owner.onNodeMouseUp) {
+      owner.onNodeMouseUp(e, id, wrapper.current)
+    }
+  }
+
+  const onNodeStartDrag = () => {
+    if (owner && owner.onNodeStartDrag) {
+      owner.onNodeStartDrag(id, wrapper.current)
+    }
+  }
+
+
+  if (owner && owner.outOptions) {
+    owner.outOptions({
+      [`nodeDraggable_${id}`]: wrapper,
+      [`startDragDelay_${id}`]: startDragDelayRef,
+    })
+  }
+
   return (
     <Draggable
       innerRef={wrapper}
@@ -140,6 +170,7 @@ export default ({
         height,
         zIndex: isEditing ? 999 : ""
       }}
+      id={id}
       stageState={stageState}
       stageRect={stageRect}
       onDragStart={startDrag}
@@ -150,6 +181,9 @@ export default ({
       onWheel={e => e.stopPropagation()}
       data-color={color}
       data-flume-component="comment"
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      startDragDelayRef={startDragDelayRef}
     >
       {isEditing ? (
         <textarea

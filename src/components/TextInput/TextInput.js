@@ -32,7 +32,7 @@ const TextInput = ({
     recalculateStageRect();
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleDragEnd);
-    if (owner) {
+    if (owner && owner.setInputing) {
       owner.setInputing(true)
     }
   };
@@ -68,7 +68,7 @@ const TextInput = ({
               onChange(0);
               numberInput.current.value = 0;
             }
-            if (owner) {
+            if (owner && owner.setInputing) {
               owner.setInputing(false)
             }
           }}
@@ -98,8 +98,8 @@ const TextInput = ({
           data-node-id={nodeId}
           data-port-name={portName}
           data-name={name}
-          onBlur={e=>{
-            if (owner) {
+          onBlur={e => {
+            if (owner && owner.setInputing) {
               owner.setInputing(false)
             }
           }}

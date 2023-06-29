@@ -223,6 +223,18 @@ const getDefaultData = ({ node, nodeType, portTypes, context }) => {
     return obj;
   }, {});
 };
+
+const clearNodes = (nodes) => {
+  let keys = []
+  for (const key in nodes) {
+    keys.push(key)
+  }
+  for (const key of keys) {
+    nodes = removeNode(nodes, key)
+  }
+  return nodes
+}
+
 const nodesReducer = (
   nodes,
   action = {},
@@ -264,7 +276,7 @@ const nodesReducer = (
       let input = node.connections.outputs[portName][0]
       if (input) {
         clearPortsCache(input.nodeId, input.portName, "input")
-      clearConnectionCache(input, output)
+        clearConnectionCache(input, output)
       }
     }
   }
@@ -471,18 +483,11 @@ const nodesReducer = (
     }
     // 用于清空所有的节点
     case "CLEAR": {
-      let keys = []
-      let nodes = action.nodes
-      for (const key in nodes) {
-        keys.push(key)
-      }
-      for (const key of keys) {
-        nodes = removeNode(nodes, key)
-      }
-      return {}
+      return clearNodes(nodes)
     }
 
     case "RE_INIT": {
+      clearNodes(nodes)
       return action.nodes
     }
 
