@@ -100,10 +100,16 @@ export default ({
 
   const startTextEdit = () => {
     setIsEditing(true);
+    if (owner && owner.setInputing) {
+      owner.setInputing(true)
+    }
   };
 
   const endTextEdit = () => {
     setIsEditing(false);
+    if (owner && owner.setInputing) {
+      owner.setInputing(false)
+    }
   };
 
   const handleTextChange = e => {
@@ -203,6 +209,7 @@ export default ({
           autoFocus
           value={text}
           ref={textarea}
+
         />
       ) : (
         <div data-flume-component="comment-text" data-comment={true} className={styles.text}>
