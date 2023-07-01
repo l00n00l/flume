@@ -161,6 +161,7 @@ export let NodeEditor = (
       recalculateStageRect,
       nanoid,
       editorId,
+      triggerRecalculation,
     })
   }
 
