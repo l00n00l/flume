@@ -150,14 +150,22 @@ const Stage = ({
 
   const byScale = value => (1 / scale) * value;
 
-  const addNode = ({ node, internalType }) => {
+  const addNode = ({ node, internalType, position = null }) => {
     const wrapperRect = wrapper.current.getBoundingClientRect();
-    const x =
-      byScale(menuCoordinates.x - wrapperRect.x - wrapperRect.width / 2) +
-      byScale(translate.x);
-    const y =
-      byScale(menuCoordinates.y - wrapperRect.y - wrapperRect.height / 2) +
-      byScale(translate.y);
+    let x = 0
+    let y = 0
+    if (position) {
+      x = position.x
+      y = position.y
+    } else {
+      x =
+        byScale(menuCoordinates.x - wrapperRect.x - wrapperRect.width / 2) +
+        byScale(translate.x);
+      y =
+        byScale(menuCoordinates.y - wrapperRect.y - wrapperRect.height / 2) +
+        byScale(translate.y);
+    }
+
     if (internalType === "comment") {
       dispatchComments({
         type: "ADD_COMMENT",
@@ -173,6 +181,14 @@ const Stage = ({
       });
     }
   };
+
+  const backScale = value => value * scale
+  const nodeXY2ClientXY = (x, y) => {
+    const wrapperRect = wrapper.current.getBoundingClientRect();
+    const retX = backScale(x - byScale(translate.x)) + wrapperRect.x + wrapperRect.width / 2
+    const retY = backScale(y - byScale(translate.y)) + wrapperRect.y + wrapperRect.height / 2
+    return { x: retX, y: retY }
+  }
 
   const handleDocumentKeyUp = e => {
     if (e.which === 32) {
@@ -228,6 +244,7 @@ const Stage = ({
       setMenuOpen,
       setMenuCoordinates,
       handleContextMenu,
+      nodeXY2ClientXY,
       draggableRef: wrapper,
       translateWrapper,
       scaleWrapper,
