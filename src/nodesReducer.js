@@ -287,10 +287,16 @@ const nodesReducer = (
       if (!from) continue
       let targetNode = nodes[from.nodeId]
       if (!targetNode) continue
-      targetNode.connections.outputs[from.portName] = [{
-        nodeId: node.id,
-        portName: portName
-      }]
+      targetNode.connections.outputs[from.portName] = targetNode.connections.outputs[from.portName] || []
+      let ret = targetNode.connections.outputs[from.portName].findIndex((value, index) => {
+        value.nodeId == node.id && value.portName == portName
+      })
+      if (ret == -1) {
+        targetNode.connections.outputs[from.portName].push({
+          nodeId: node.id,
+          portName
+        })
+      }
     }
 
     for (const portName in node.connections.outputs) {
@@ -410,10 +416,13 @@ const nodesReducer = (
       const { nodes: add_nodes } = action;
       let _nodes = nodes
       for (const node of add_nodes) {
-        _nodes = rebuildNodeConnections({
+        _nodes = {
           ..._nodes,
           [node.id]: node
-        }, node)
+        }
+      }
+      for (const node of add_nodes) {
+        _nodes = rebuildNodeConnections(_nodes, _nodes[node.id])
       }
       return _nodes
     }
