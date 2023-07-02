@@ -16,6 +16,8 @@ const TextInput = ({
   const numberInput = React.useRef()
   const recalculateStageRect = React.useContext(RecalculateStageRectContext)
   const owner = React.useContext(OwnerContext)
+  const isInputting = React.useRef(false)
+
 
   const handleDragEnd = () => {
     document.removeEventListener("mousemove", handleMouseMove);
@@ -34,8 +36,18 @@ const TextInput = ({
     document.addEventListener("mouseup", handleDragEnd);
     if (owner && owner.setInputing) {
       owner.setInputing(true)
+      isInputting.current = true
     }
   };
+
+  React.useEffect(() => {
+    return () => {
+      if (isInputting.current && owner && owner.setInputing) {
+        owner.setInputing(false)
+        isInputting.current = false
+      }
+    }
+  }, [])
 
   return (
     <div className={styles.wrapper} data-flume-component="text-input">

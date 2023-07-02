@@ -32,6 +32,7 @@ export default ({
     x: 0,
     y: 0
   });
+  const isInputting = React.useRef(false)
 
   const handleContextMenu = e => {
     e.preventDefault();
@@ -102,6 +103,7 @@ export default ({
     setIsEditing(true);
     if (owner && owner.setInputing) {
       owner.setInputing(true)
+      isInputting.current = true
     }
   };
 
@@ -109,6 +111,7 @@ export default ({
     setIsEditing(false);
     if (owner && owner.setInputing) {
       owner.setInputing(false)
+      isInputting.current = false
     }
   };
 
@@ -157,6 +160,15 @@ export default ({
       owner.onNodeStartDrag(id, wrapper.current)
     }
   }
+
+  React.useEffect(() => {
+    return () => {
+      if (isInputting.current && owner && owner.setInputing) {
+        owner.setInputing(false)
+        isInputting.current = false
+      }
+    }
+  }, [])
 
 
   if (owner && owner.outOptions) {
