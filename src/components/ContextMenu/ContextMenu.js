@@ -151,6 +151,7 @@ const ContextMenu = ({
       setFilter,
       setFilterOptions,
       filterOptions,
+      menuInputRef: filterInput
     })
 
     React.useEffect(() => {
