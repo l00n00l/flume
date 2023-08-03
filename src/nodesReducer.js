@@ -259,6 +259,9 @@ const nodesReducer = (
 
   const clearNodeCache = (nodeId, nodes) => {
     const node = nodes[nodeId]
+    if (!node) {
+      return
+    }
 
     for (const portName in node.connections.inputs) {
       let input = { nodeId, portName }
