@@ -119,4 +119,10 @@
   &[data-port-color="control"]{
     background: linear-gradient(to bottom, #ffffff, #ffffff);
   }
+  &[data-port-color="black"]{
+    background: linear-gradient(to bottom, #000000, #000000);
+  }
+  &[data-port-color="curve_editor"]{
+    background: linear-gradient(to bottom, hsl(103, 100%, 64%), #d9ff00);
+  }
 }

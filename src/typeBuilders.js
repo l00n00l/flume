@@ -95,6 +95,7 @@ export const Colors = {
   tuple: "tuple",
   dict: "dict",
   control: "control",
+  curve_editor: "curve_editor",
 };
 
 export const getPortBuilders = ports =>
