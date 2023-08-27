@@ -54,6 +54,10 @@ const Select = ({
   )
 
   const selectedOption = React.useMemo(() => {
+    if (!options || (data != 0 && !data)) {
+      return null;
+    }
+
     const option = options.find(o => o.value === data);
     if (option) {
       return {
@@ -85,13 +89,11 @@ const Select = ({
             })}
           </div>
         ) : null
-      ) : (data || data == 0) ? (
-        <SelectedOption
-          wrapperRef={wrapper}
-          option={selectedOption}
-          onClick={openDrawer}
-        />
-      ) : null}
+      ) : selectedOption && <SelectedOption
+        wrapperRef={wrapper}
+        option={selectedOption}
+        onClick={openDrawer}
+      />}
       {
         (allowMultiple || (!data && data != 0)) &&
         <div className={selectStyles.wrapper} ref={wrapper} onClick={openDrawer}>
