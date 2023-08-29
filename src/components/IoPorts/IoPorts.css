@@ -125,4 +125,7 @@
   &[data-port-color="curve_editor"]{
     background: linear-gradient(to bottom, hsl(103, 100%, 64%), #d9ff00);
   }
+  &[data-port-color="slider"]{
+    background: linear-gradient(to bottom, hsl(71, 100%, 73%), #7dffc2);
+  }
 }

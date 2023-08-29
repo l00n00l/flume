@@ -96,6 +96,7 @@ export const Colors = {
   dict: "dict",
   control: "control",
   curve_editor: "curve_editor",
+  slider: "slider",
 };
 
 export const getPortBuilders = ports =>
